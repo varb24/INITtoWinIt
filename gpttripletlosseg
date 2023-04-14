@@ -1,0 +1,42 @@
+import tensorflow as tf
+
+# Define the input placeholder
+input_shape = (None, 96, 96, 3)
+inputs = tf.keras.Input(shape=input_shape)
+
+# Define the convolutional layers
+x = tf.keras.layers.Conv2D(64, 3, activation='relu', padding='same')(inputs)
+x = tf.keras.layers.MaxPooling2D()(x)
+x = tf.keras.layers.BatchNormalization()(x)
+x = tf.keras.layers.Conv2D(128, 3, activation='relu', padding='same')(x)
+x = tf.keras.layers.MaxPooling2D()(x)
+x = tf.keras.layers.BatchNormalization()(x)
+x = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='same')(x)
+x = tf.keras.layers.MaxPooling2D()(x)
+x = tf.keras.layers.BatchNormalization()(x)
+x = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')(x)
+x = tf.keras.layers.GlobalMaxPooling2D()(x)
+
+# Define the embedding layer
+embedding_size = 128
+embeddings = tf.keras.layers.Dense(embedding_size)(x)
+
+# Define the model
+model = tf.keras.Model(inputs, embeddings)
+
+# Define the triplet loss
+def triplet_loss(y_true, y_pred, alpha=0.2):
+    anchor, positive, negative = y_pred[:,0:embedding_size], y_pred[:,embedding_size:2*embedding_size], y_pred[:,2*embedding_size:]
+    pos_dist = tf.reduce_sum(tf.square(anchor-positive), axis=-1)
+    neg_dist = tf.reduce_sum(tf.square(anchor-negative), axis=-1)
+    loss = tf.maximum(pos_dist - neg_dist + alpha, 0.0)
+    return tf.reduce_mean(loss)
+
+# Compile the model with the triplet loss
+optimizer = tf.keras.optimizers.Adam()
+model.compile(optimizer=optimizer, loss=triplet_loss)
+
+# Train the model
+x_train = ...
+y_train = ...
+model.fit(x_train, y_train, ...)
