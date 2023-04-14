@@ -1,42 +1,27 @@
 import tensorflow as tf
+from tensorflow.keras.applications import EfficientNetB1
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.models import Model
 
-# Define the input placeholder
-input_shape = (None, 128, 128, 3)
-inputs = tf.keras.Input(shape=input_shape)
+# Load the EfficientNetB1 pre-trained model (weights from ImageNet)
+base_model = EfficientNetB1(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
 
-# Define the convolutional layers
-x = tf.keras.layers.Conv2D(64, 3, activation='relu', padding='same')(inputs)
-x = tf.keras.layers.MaxPooling2D()(x)
-x = tf.keras.layers.BatchNormalization()(x)
-x = tf.keras.layers.Conv2D(128, 3, activation='relu', padding='same')(x)
-x = tf.keras.layers.MaxPooling2D()(x)
-x = tf.keras.layers.BatchNormalization()(x)
-x = tf.keras.layers.Conv2D(256, 3, activation='relu', padding='same')(x)
-x = tf.keras.layers.MaxPooling2D()(x)
-x = tf.keras.layers.BatchNormalization()(x)
-x = tf.keras.layers.Conv2D(512, 3, activation='relu', padding='same')(x)
-x = tf.keras.layers.GlobalMaxPooling2D()(x)
+# Add a GlobalAveragePooling2D layer to reduce the spatial dimensions of the output
+x = base_model.output
+x = GlobalAveragePooling2D()(x)
 
-# Define the embedding layer
-embedding_size = 128
-embeddings = tf.keras.layers.Dense(embedding_size)(x)
+# Add a fully connected layer with 128 neurons and ReLU activation
+x = Dense(128, activation='relu')(x)
 
-# Define the model
-model = tf.keras.Model(inputs, embeddings)
+# Add a final fully connected layer with softmax activation for classification
+predictions = Dense(num_classes, activation='softmax')(x)
 
-# Define the triplet loss
-def triplet_loss(y_true, y_pred, alpha=0.2):
-    anchor, positive, negative = y_pred[:,0:embedding_size], y_pred[:,embedding_size:2*embedding_size], y_pred[:,2*embedding_size:]
-    pos_dist = tf.reduce_sum(tf.square(anchor-positive), axis=-1)
-    neg_dist = tf.reduce_sum(tf.square(anchor-negative), axis=-1)
-    loss = tf.maximum(pos_dist - neg_dist + alpha, 0.0)
-    return tf.reduce_mean(loss)
+# Combine the base model and the fully connected layers into a single model
+model = Model(inputs=base_model.input, outputs=predictions)
 
-# Compile the model with the triplet loss
-optimizer = tf.keras.optimizers.Adam()
-model.compile(optimizer=optimizer, loss=triplet_loss)
+# Freeze the weights of the base model layers to prevent overfitting
+for layer in base_model.layers:
+    layer.trainable = False
 
-# Train the model
-x_train = ...
-y_train = ...
-model.fit(x_train, y_train, ...)
+# Compile the model with categorical cross-entropy loss and Adam optimizer
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
