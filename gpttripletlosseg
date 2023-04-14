@@ -4,7 +4,7 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 from tensorflow.keras.models import Model
 
 # Load the EfficientNetB1 pre-trained model (weights from ImageNet)
-base_model = EfficientNetB1(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
+base_model = EfficientNetB1(include_top=False, weights='imagenet', input_shape=(112, 112, 3))
 
 # Add a GlobalAveragePooling2D layer to reduce the spatial dimensions of the output
 x = base_model.output
