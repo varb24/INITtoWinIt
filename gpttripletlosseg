@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 # Define the input placeholder
-input_shape = (None, 96, 96, 3)
+input_shape = (None, 128, 128, 3)
 inputs = tf.keras.Input(shape=input_shape)
 
 # Define the convolutional layers
