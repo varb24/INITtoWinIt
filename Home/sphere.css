@@ -1,0 +1,64 @@
+/* Importing Google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+body {
+background-color: #f5f5f5;
+}
+
+/* Applying CSS to sphere */
+.tagcloud {
+position: absolute;
+top: 0;
+right: 0;
+bottom:150px;
+transform: translate(270%, 10%);
+font-weight: bold;
+letter-spacing: 1px;
+font-family: 'Bebas Neue', cursive;
+font-size: 20px;
+color: white;
+}
+
+/* Change color of each text in sphere on hover */
+.tagcloud--item:hover {
+color: darkblue
+}
+
+/* Add this file to your project if you want to style the sphere tags */
+.tc-0 {
+font-size: 20px;
+}
+.tc-1 {
+font-size: 24px;
+}
+.tc-2 {
+font-size: 28px;
+}
+.tc-3 {
+font-size: 32px;
+}
+.tc-4 {
+font-size: 36px;
+}
+.tc-5 {
+font-size: 40px;
+}
+
+.tagcloud > a {
+color: #0072c6;
+text-decoration: none;
+transition: color 0.3s;
+}
+
+.tagcloud > a:hover {
+color: #005ba1;
+}
+
+.sphere-container {
+    /* position: absolute; */
+    right: -30%;
+    top: 105%;
+    transform: translateY(-100%);
+    padding-right: 5px;
+    padding-right: 5px;
+  }
