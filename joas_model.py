@@ -5,7 +5,7 @@ import cv2
 import shutil
 import random
 import torch #pytorch 
-import matplotlib.pyplot as plt 
+#import matplotlib.pyplot as plt 
 from torchvision import datasets, transforms
 import torch.nn as nn #Neural Network
 import torch.nn.functional as F #for nn functions(Argmax, Relu, Sigmoid, cross entropy etc...)
@@ -16,7 +16,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 from efficientnet_pytorch import EfficientNet
 from PIL import Image
-from torchsummary import summary # this torch print summary of model
+#from torchsummary import summary # this torch print summary of model
 import sys
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 sys.path.append(os.getcwd())

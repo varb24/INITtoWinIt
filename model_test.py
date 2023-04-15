@@ -5,18 +5,41 @@ import threading
 from joas_model import MyModel
 from flask import Flask, request
 
-# Set up the Flask app
+# Set up the Flask app API
 app = Flask(__name__)
 
 # Set up the camera input
 cap = cv2.VideoCapture(0)
+
+#Define camera parameters
+text = ""
+font = cv2.FONT_HERSHEY_SIMPLEX
+font_scale = 1
+color = (34,139,34)
+thickness = 2
+
+text_size, _ = cv2.getTextSize(text, font, font_scale, thickness)
+
+# adjust the box size based on the text size
+box_width = text_size[0] + 20
+box_height = text_size[1] + 20
+box_pos = (50,50)
+box_size = (box_width, box_height)
+
+# get the dimensions of the camera frame
+frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)) + 40
+frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)) + 40
+
+# calculate the size and position of the square frame
+frame_size = min(frame_width, frame_height) // 2
+frame_pos = ((frame_width - frame_size) // 2, (frame_height - frame_size) // 2)
 
 # Initialize face data dictionary
 face_data = {}
 
 # Load the facial recognition model
 model = MyModel()
-weights = torch.load('/Users/joascerutti/downloads/best_efficientnet_b0.pth', map_location=torch.device('cpu'))
+weights = torch.load('/Users/iandeleon/Downloads/best_efficientnet_b0-2.pth', map_location=torch.device('cpu'))
 model.load_state_dict(weights)
 
 # Define functions
@@ -65,10 +88,20 @@ def recognize_faces():
             embeddings = model(torch.from_numpy(processed_frame))
             embeddings = embeddings.detach().numpy()[0]
 
+        color = (255,255,255)
+
+        cv2.rectangle(frame, box_pos, (box_pos[0] + box_size[0], box_pos[1] + box_size[1]), (255,255,255), -1)
+
+        cv2.rectangle(frame, frame_pos, (frame_pos[0] + frame_size, frame_pos[1] + frame_size), color , thickness)
+
+        
+
+
         # Check if a face was recognized
         student_id = is_face(embeddings, face_data)
         if student_id:
-            print("Student ID: ", student_id)
+            text = student_id
+            cv2.putText(frame, text, (box_pos[0]+10, box_pos[1] + box_height - 10), font, font_scale, color, thickness)
         else:
             # Face data does not exist, prompt user for student ID and store face data
             student_id = input("Student ID not found. Please enter the student ID: ")
