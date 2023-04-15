@@ -25,10 +25,10 @@ import timm
 class MyModel(nn.Module):
       
         #Data and Organization
-        path = os.listdir("/Users/joascerutti/Desktop/joas_Model_n_Data/Split/")
+        path = os.listdir("/Users/iandeleon/Documents/GitHub/INITtoWinIt/")
         print(os.listdir())
         ['.DS_Store', 'FaceID.ipynb', 'Split Folder', 'Faces Data']
-        data_path = "/Users/joascerutti/Desktop/joas_Model_n_Data/Split/"
+        data_path = "/Users/iandeleon/Documents/GitHub/INITtoWinIt/"
 
         train_path = os.path.join(data_path, "train")
         val_path = os.path.join(data_path, "val")
@@ -135,8 +135,8 @@ class MyModel(nn.Module):
             ])
         }
 
-        train_path = "/Users/joascerutti/Desktop/joas_Model_n_Data/Split/train/"
-        val_path = "/Users/joascerutti/Desktop/joas_Model_n_Data/Split/val/"
+        train_path = "/Users/iandeleon/Documents/GitHub/INITtoWinIt/dataFiles"
+        val_path = "/Users/iandeleon/Documents/GitHub/INITtoWinIt/dataFiles"
 
         train_dataset = DigiFaceDataset(train_path, transform=data_transforms['train'])
         val_dataset = DigiFaceDataset(val_path, transform=data_transforms['val'])
