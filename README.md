@@ -1,2 +1,0 @@
-# INITtoWinIt
-Hackathon Project
