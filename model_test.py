@@ -16,7 +16,7 @@ face_data = {}
 
 # Load the facial recognition model
 model = MyModel()
-weights = torch.load('model_weights.pth', map_location=torch.device('cpu'))
+weights = torch.load('/Users/joascerutti/downloads/best_efficientnet_b0.pth', map_location=torch.device('cpu'))
 model.load_state_dict(weights)
 
 # Define functions

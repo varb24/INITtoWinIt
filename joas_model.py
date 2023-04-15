@@ -24,10 +24,10 @@ from digi_face_dataset import DigiFaceDataset
 class MyModel(nn.Module):
       
         #Data and Organization
-        path = os.listdir(r"C:\Users\jboro\Desktop\INITTOWINIT\DATA")
+        path = os.listdir("/Users/joascerutti/Desktop/joas_Model_n_Data/Split/")
         print(os.listdir())
         ['.DS_Store', 'FaceID.ipynb', 'Split Folder', 'Faces Data']
-        data_path = r"C:\Users\jboro\Desktop\INITTOWINIT\DATA"
+        data_path = "/Users/joascerutti/Desktop/joas_Model_n_Data/Split/"
 
         train_path = os.path.join(data_path, "train")
         val_path = os.path.join(data_path, "val")
@@ -119,8 +119,8 @@ class MyModel(nn.Module):
             ])
         }
 
-        train_path = r'C:\Users\jboro\Desktop\INITTOWINIT\TRAINING_DATA'
-        val_path = r'C:\Users\jboro\Desktop\INITTOWINIT\VALIDATION_DATA'
+        train_path = "/Users/joascerutti/Desktop/joas_Model_n_Data/Split/train/"
+        val_path = "/Users/joascerutti/Desktop/joas_Model_n_Data/Split/val/"
 
         train_dataset = DigiFaceDataset(train_path, transform=data_transforms['train'])
         val_dataset = DigiFaceDataset(val_path, transform=data_transforms['val'])
