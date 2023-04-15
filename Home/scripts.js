@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
   ];
 
   const options = {
-    radius:250,
+    radius: 250,
     maxSpeed: 15.0,
     minSpeed: 2.0,
     direction: 135,
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
   TagCloud(sphereContainer, tags, options);
 
   let prevScrollpos = window.pageYOffset;
-  window.onscroll = function() {
+  window.onscroll = function () {
     const currentScrollPos = window.pageYOffset;
     if (prevScrollpos > currentScrollPos) {
       document.querySelector('header').style.transform = 'translateY(0)';
@@ -51,5 +51,5 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     prevScrollpos = currentScrollPos;
   };
-
 });
+

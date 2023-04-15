@@ -39,6 +39,7 @@
             padding-bottom: 1px;
             transition: opacity 0.5s; /* add a transition effect */
             opacity: 1; /* set initial opacity to fully visible */
+            
         }
         
         header img {
@@ -65,9 +66,19 @@
             font-weight: bold;
         }
         
-        header a:hover {
-            color: #2196F3;
+        
+        header a:not(.login-link):hover {
+            outline: 2px solid #2196F3;
+            border-radius: 5px;
+            box-sizing: border-box;
+            padding: 5px;
         }
+        
+        header a:not(.login-link):hover span {
+            outline-color: #1E88E5;
+        }
+        
+          
         
         .login-btn {
             background-color: #2196F3;
@@ -114,24 +125,20 @@
     <header>
         <img src="Images/Logo.png" alt="Logo">
         <ul>
-            <li><a href="Home.html">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Impact</a></li>
-            <li><a href="#">Demo</a></li>
-            <li><a href="#">Meet The Team</a></li>
+            <li><a href="Home.html"><span>Home</span></a></li>
+            <li><a href="#"><span>About Us</span></a></li>
+            <li><a href="#"><span>Impact</span></a></li>
+            <li><a href="#"><span>Demo</span></a></li>
+            <li><a href="#"><span>Meet The Team</span></a></li>
             </ul>
             
-            <a href="login.html"><button class="login-btn">Login</button></a>
+            <a href="login.html" class="login-link"><button class="login-btn">Login</button></a>
 
             </header>
             <div class="box">
                 <h4 class="h4">UniFace -- Advanced Facial Recognition AI for Secure Event Access Control</h4>
                 <p class="p">Are You Who You Say You Are?</p>
-                <div class="images-container">
-                    <img src="Images/Canva.png" alt="Canvas Image" class="image">
-                    <img src="Images/Ticket.png" alt="Ticket Image" class="image">
-                    <img src="Images/ringg.webp" alt="Ring Image" class="image">
-                </div>
+
             </div>
             
             <script>
