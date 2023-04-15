@@ -21,6 +21,7 @@ import sys
 from torchvision.transforms import Compose, Resize, ToTensor, Normalize
 sys.path.append(os.getcwd())
 from digi_face_dataset import DigiFaceDataset
+import timm
 class MyModel(nn.Module):
       
         #Data and Organization
@@ -106,24 +107,21 @@ class MyModel(nn.Module):
                     loss = criterion(outputs, labels)
                     running_loss += loss.item() * inputs.size(0)
             return running_loss / len(dataloader.dataset)"""
-        def test_model(model_path, device): #test_data_path, transform
-            model.load_state_dict(torch.load(model_path))
+        def __init__(self, num_classes=2):
+            super(MyModel, self).__init__()
+            self.base_model = timm.create_model("efficientnet_b0", pretrained=False)
+            in_features = self.base_model.classifier.in_features
+            self.base_model.classifier = nn.Linear(in_features, num_classes)
+        def forward(self, x):
+            return self.base_model(x)
+        def test_model(model, loaded_weights, device): #test_data_path, transform
+            model.load_state_dict(loaded_weights, strict=False)
             model.to(device)
             model.eval()
 
             correct_predictions = 0
             total_predictions = 0
 
-            with torch.no_grad():
-                for inputs, labels in test_dataloader:
-                    inputs, labels = inputs.to(device), labels.to(device)
-                    outputs = model(inputs)
-                    _, predicted = torch.max(outputs.data, 1)
-                    total_predictions += labels.size(0)
-                    correct_predictions += (predicted == labels).sum().item()
-
-            accuracy = correct_predictions / total_predictions
-            print(f"Accuracy on test set: {accuracy * 100:.2f}%")
         data_transforms = {
             'train': Compose([
                 Resize((224, 224)),

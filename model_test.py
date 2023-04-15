@@ -41,8 +41,6 @@ face_data = {}
 model_path = torch.load('/Users/joascerutti/Downloads/best_efficientnet_b0-2.pth', map_location=torch.device('cpu'))
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = MyModel().test_model(model_path, device)
-print("hello world")
-
 # Define functions
 def preprocess(frame):
     # Preprocess the frame by converting it to grayscale and normalizing its pixel values
