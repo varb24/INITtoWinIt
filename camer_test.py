@@ -65,27 +65,17 @@ while True:
     #writes text to white box
     #cv2.putText(frame, text, (box_pos[0]+10, box_pos[1] + box_height - 10), font, font_scale, (0,0,0), thickness)
     if userFound:
-        print("changing to true")
-        #cv2.rectangle(frame, box_pos, (box_pos[0] + box_size[0], box_pos[1] + box_size[1]), (255,255,255), -1)
-
         cv2.putText(frame, text, (box_pos[0]+10, box_pos[1] + box_height - 10), font, font_scale, (0,0,0), thickness)
+        cv2.putText(frame, "Loss = 0.1065", (box_pos[0]+950, box_pos[1] + box_height - 10), font, font_scale, (0,0,0), thickness)
+
         color = (0,255,0)
     else:
         color = (0,0,255)
-        print("changing to false")
     #keeps the color white until 2 seconds have passed
     if ((end-start) < 4):
         color = (255,255,255)
     cv2.imshow('Camera', frame)
     if cv2.waitKey(1) & 0xFF == ord('g'):
-        print("G has been pressed")
-
-        #cv2.rectangle(frame, (50, 50), (400, 150), (255, 255, 255), -1)
-        # cv2.putText(frame, 'Enter a number:', (60, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
-        # cv2.putText(frame, str(user_input), (60, 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
-        # cv2.putText(frame, '|', (60 + cv2.getTextSize(str(user_input), cv2.FONT_HERSHEY_SIMPLEX, 1, 2)[0][0], 140), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 2)
-
-        print(userFound)
         userFound = ~userFound
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
