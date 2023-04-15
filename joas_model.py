@@ -84,7 +84,7 @@ class MyModel(nn.Module):
                 dst_path = os.path.join(test_folder_path, image_name)
                 if os.path.isfile(src_path):
                     shutil.copy(src_path, dst_path)     
-        def train(model, dataloader, criterion, optimizer, device):
+        """def train(model, dataloader, criterion, optimizer, device):
             model.train()
             running_loss = 0.0
             for inputs, labels in dataloader:
@@ -105,7 +105,25 @@ class MyModel(nn.Module):
                     outputs = model(inputs)
                     loss = criterion(outputs, labels)
                     running_loss += loss.item() * inputs.size(0)
-            return running_loss / len(dataloader.dataset)
+            return running_loss / len(dataloader.dataset)"""
+        def test_model(model_path, device): #test_data_path, transform
+            model.load_state_dict(torch.load(model_path))
+            model.to(device)
+            model.eval()
+
+            correct_predictions = 0
+            total_predictions = 0
+
+            with torch.no_grad():
+                for inputs, labels in test_dataloader:
+                    inputs, labels = inputs.to(device), labels.to(device)
+                    outputs = model(inputs)
+                    _, predicted = torch.max(outputs.data, 1)
+                    total_predictions += labels.size(0)
+                    correct_predictions += (predicted == labels).sum().item()
+
+            accuracy = correct_predictions / total_predictions
+            print(f"Accuracy on test set: {accuracy * 100:.2f}%")
         data_transforms = {
             'train': Compose([
                 Resize((224, 224)),
@@ -138,7 +156,7 @@ class MyModel(nn.Module):
 
         epochs = 10
         #Loaded pretrained weights for efficientnet-b0
-        best_val_loss = float('inf')
+        """best_val_loss = float('inf')
         for epoch in range(epochs):
             print(f"Epoch {epoch+1}/{epochs}")
             
@@ -151,7 +169,7 @@ class MyModel(nn.Module):
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
                 torch.save(model.state_dict(), 'best_efficientnet_b0.pth')
-                print("Model saved.")
+                print("Model saved.")"""
 if __name__ == "__main__":
     model = MyModel()
     model.train()

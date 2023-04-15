@@ -3,10 +3,10 @@ import numpy as np
 import torch
 import threading
 from joas_model import MyModel
-from flask import Flask, request
+#from flask import Flask, request
 
 # Set up the Flask app API
-app = Flask(__name__)
+#app = Flask(__name__)
 
 # Set up the camera input
 cap = cv2.VideoCapture(0)
@@ -38,9 +38,10 @@ frame_pos = ((frame_width - frame_size) // 2, (frame_height - frame_size) // 2)
 face_data = {}
 
 # Load the facial recognition model
-model = MyModel()
-weights = torch.load('/Users/iandeleon/Downloads/best_efficientnet_b0-2.pth', map_location=torch.device('cpu'))
-model.load_state_dict(weights)
+model_path = torch.load('/Users/joascerutti/Downloads/best_efficientnet_b0-2.pth', map_location=torch.device('cpu'))
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = MyModel().test_model(model_path, device)
+print("hello world")
 
 # Define functions
 def preprocess(frame):
@@ -49,7 +50,7 @@ def preprocess(frame):
     normalized = gray / 255.0
     return np.expand_dims(np.expand_dims(normalized, axis=0), axis=0)
 
-def is_face(embeddings, face_data):
+def is_face(embeddings, face_data, model):
     # Check if the embeddings correspond to a face
     if len(embeddings) > 0:
         # Iterate through the stored face data
@@ -74,7 +75,7 @@ def store_face(embeddings, student_id):
         f.write(','.join([str(e) for e in embeddings]) + ',' + str(student_id) + '\n')
 
 # Define face recognition loop
-def recognize_faces():
+def recognize_faces(model):
     face_data = {}
     while True:
         # Capture a frame
@@ -117,7 +118,7 @@ def recognize_faces():
     cv2.destroyAllWindows()
 
 # Define face recognition API endpoint
-@app.route('/recognize_face', methods=['POST'])
+"""@app.route('/recognize_face', methods=['POST'])
 def recognize_face_api():
     # Capture a frame from the request
     file = request.files['image']
@@ -142,7 +143,7 @@ def recognize_face_api():
 
 if __name__ == '__main__':
     # Start the facial recognition loop in a separate thread
-    face_thread = threading.Thread(target=recognize_faces)
+    face_thread = threading.Thread(target=recognize_faces, args=(model,))
     face_thread.daemon = True
     face_thread.start()
 
@@ -150,4 +151,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
     # Stop the facial recognition loop when the API is terminated
-    face_thread.join()
+    face_thread.join()"""
