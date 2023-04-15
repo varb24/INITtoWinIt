@@ -2,48 +2,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Security Solutions - Impact on the World</title>
+    <title>UniFace | Impact</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: linear-gradient(315deg, #ffffff 0%, #335c81 74%);
-            text-align: center;
-            padding: 50px;
+        :root {
+            --primary-color: #1c3b57;
+            --secondary-color: #ffffff;
+            --accent-color: #e63946;
+            --neutral-color: #000000;
         }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 50px;
+            color: var(--secondary-color);
+        }
+    
         h1 {
-            font-size: 36px;
-            color: #ffffff;
+            font-size: 48px;
+            font-weight: 700;
             margin-bottom: 40px;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
         }
     
         .image-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-gap: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1200px;
         }
     
         .image-box {
-            width: 300px;
-            border: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--secondary-color);
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+    
+        .image-box:hover {
+            transform: translateY(-10px);
         }
     
         .image-box img {
             width: 100%;
             height: auto;
+            object-fit: cover;
+            border-radius: 5px;
         }
     
         .image-box h3 {
-            font-size: 24px;
-            margin: 10px 0;
+            font-size: 28px;
+            font-weight: 400;
+            margin: 20px 0;
+            color: var(--primary-color);
         }
     
         .image-box p {
             font-size: 16px;
-            color: #666;
+            color: var(--neutral-color);
+            text-align: justify;
+        }
+    
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
         }
     </style>
 </head>
@@ -58,9 +96,8 @@
         <div class="image-box">
             <img src="images/School Institution.png" alt="Educational Institutions">
             <h3>Educational Institutions</h3>
-            <p>By employing AI security in schools and universities, we create a safe environment for students and staff while safeguarding valuable resources and information.</p>
+            <p>By employing AI security in schools and universities, we create a safe environment for students and staff while safeguarding valuable resources and information. </p>
         </div>
-    
         <div class="image-box">
             <img src="images/Event Security.png" alt="Event Security">
             <h3>Event Security</h3>
@@ -68,10 +105,11 @@
         </div>
     
         <div class="image-box">
-            <img src="https://example.com/img/global-impact.jpg" alt="Global Impact">
+            <img src="images/Global Impact.png" alt="Global Impact">
             <h3>Global Impact</h3>
             <p>Our AI-driven security technologies are transforming the industry, making the world a safer place for businesses, educational institutions, and event organizers.</p>
         </div>
     </div>
 </body>
 </html>
+
